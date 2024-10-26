@@ -1,6 +1,9 @@
 import doctorSchema from "../model/doctor.js";
 import patientSchema from "../model/patient.js";
+import otpSchema from "../model/otp.js";
 import bcrypt from "bcrypt";
+import { createOpt } from "../middelware/createOpt.js";
+
 
 // ----------- login ------------
 export const login = async (req, res) => {
@@ -28,11 +31,10 @@ export const login = async (req, res) => {
       });
     }
     // login if evrything is ok
-    console.log(req.body);
-    return res.status(200).json({ message: "Welcome back", data: emailExist });
+    return res.status(200).json({ message: "Welcome back", userId: emailExist._id });
     
   } catch (error) {
-    console.log(error.message);
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -62,8 +64,17 @@ export const signup = async (req, res) => {
     if (!savePatient) {
       return res.status(200).json({ message: "user not saved" });
     }
+
+    // creating the otp for the patient to verify
+    const creatOtp = await new otpSchema({
+      creatorId: savePatient._id,
+      otp: createOpt(),
+    }).save();
+
     // login if evrything is ok
-    return res.status(200).json({ message: "account created successfully" });
+    return res
+      .status(200)
+      .json({ message: "account created successfully", id: savePatient._id});
   } catch (error) {
     console.log(error.message);
   }
@@ -73,6 +84,8 @@ export const signup = async (req, res) => {
 export const updateAccount = async (req, res) => {
   try {
     const { userID } = req.params;
+    // neccessary data to update
+    const {firstName, lastName, location, DOB, address, avatar, medicalRecord, gender, occupation, phoneNumber } = req.body;
     // finding if the account already exist
     const findAccount = await patientSchema.findOne({ userID });
     if (!findAccount) {
@@ -81,7 +94,21 @@ export const updateAccount = async (req, res) => {
     // find the account and update
     const updateAcccount = await patientSchema.findOneAndUpdate(
       { userID },
-      { $set: req.body }
+      {
+        $set: {
+          firstName,
+          firstName,
+          lastName,
+          location,
+          DOB,
+          address,
+          avatar,
+          medicalRecord,
+          gender,
+          occupation,
+          phoneNumber,
+        },
+      }
     );
     // if everything not good
     if (!updateAcccount) {
@@ -113,4 +140,21 @@ export const deleteAccount = async (req, res) => {
     console.log(error.message);
   }
 };
+
+// ............. get a user info .............
+export const getUser = async (req, res) => { 
+  try {
+    // getting the user if from 
+    const { userID } = req.param;
+    const findAccount = await patientSchema.findOne({ userID }, { password: 0});
+    if (!findAccount) {
+      return res.status(400).json({ message: "Account not found" });
+    }
+    // if the account is found then we send it
+    return res.status(200).json({user: findAccount})
+    // find the user account
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+}
 

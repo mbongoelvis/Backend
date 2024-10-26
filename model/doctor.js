@@ -4,39 +4,46 @@ const doctorSchema = mongoose.Schema(
   {
     email: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
-      required: true,
     },
-    firstname: {
-      default: "firstname",
+    firstName: {
       type: String,
     },
-    lastname: {
-      default: "lastname",
+    lastName: {
       type: String,
     },
     DOB: {
-      required: true,
-      default: "20 July 1998",
-      type: Date,
+      type: String,
     },
     workingDays: {
       type: String,
-      default: "Monday - Friday",
-      required: true,
     },
     workingTime: {
       type: String,
-      default: "12:00 - 6:00",
-      required: true,
     },
     wordkingExperience: {
       type: String,
-      default: "4 years +",
-      required: true,
+    },
+    experience: {
+      type: String,
+    },
+    cv: {
+      type: String,
+    },
+    speciality: {
+      type: String,
+    },
+    phoneNumber: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+      default: "https://as1.ftcdn.net/v2/jpg/02/32/71/62/1000_F_232716200_xTsnomMS5djsC6m9cDNQmEKtPgt11Xjo.jpg"
     },
     isDoctor: {
       type: Boolean,

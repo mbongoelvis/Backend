@@ -14,16 +14,33 @@ const patientSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    firstname: {
+    firstName: {
       type: String,
     },
-    lastname: {
+    lastName: {
       type: String,
     },
     DOB: {
-      type: Date,
+      type: String,
     },
-    location: {
+    address: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+      default:
+        "https://as1.ftcdn.net/v2/jpg/02/32/71/62/1000_F_232716200_xTsnomMS5djsC6m9cDNQmEKtPgt11Xjo.jpg",
+    },
+    medicalRecord: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
+    occupation: {
+      type: String,
+    },
+    phoneNumber: {
       type: String,
     },
     isDoctor: {

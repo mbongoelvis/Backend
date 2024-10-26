@@ -133,3 +133,23 @@ export const deleteAccount = async (req, res) => {
   const deleteAccount = await doctorSchema.deleteOne({ doctorID });
   return res.status(200).json({ message: "account deleted" });
 };
+
+// ...........get doctor information ............
+export const getUser = async (req, res) => {
+  try {
+    // getting the user if from
+    const { userID } = req.param;
+    const findAccount = await doctorSchema.findOne(
+      { userID },
+      { password: 0 }
+    );
+    if (!findAccount) {
+      return res.status(400).json({ message: "Account not found" });
+    }
+    // if the account is found then we send it
+    return res.status(200).json({ user: findAccount });
+    // find the user account
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+};

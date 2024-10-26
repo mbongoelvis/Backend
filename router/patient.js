@@ -3,7 +3,8 @@ import {
   login,
   signup,
   updateAccount,
-  deleteAccount
+  deleteAccount,
+  getUser
 } from "../controllers/patient.js";
 
 const patientRouter = express.Router();
@@ -12,6 +13,8 @@ const patientRouter = express.Router();
 patientRouter.post("/login", login);
 
 patientRouter.post("/signup", signup);
+
+patientRouter.get("/getuser/:id", getUser);
 
 patientRouter.patch("/updateaccount/:id", updateAccount);
 

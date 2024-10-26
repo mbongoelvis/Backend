@@ -8,6 +8,8 @@ import patientRouter from "./router/patient.js";
 import adminRouter from "./router/admin.js";
 import doctorRouter from "./router/doctor.js";
 import bookingRouter from "./router/booking.js";
+import otp from "./router/otp.js";
+import { createOpt } from "./middelware/createOpt.js";
 
 // invoking dotenv variables
 dotenv.config();
@@ -29,6 +31,8 @@ app.use("/api/doctor", doctorRouter)
 app.use("/api/patient", patientRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/booking", bookingRouter);
+app.use("/api/otp", otp);
+
 
 // making the server
 app.listen(port, () => {

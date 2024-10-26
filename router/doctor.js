@@ -1,5 +1,5 @@
 import express from "express";
-import { login, signup, acceptBooking, declineBooking, getBooking, deleteAccount } from "../controllers/doctor.js";
+import { login, signup, acceptBooking, declineBooking, getBooking, deleteAccount, getUser } from "../controllers/doctor.js";
 
 const doctorRouter = express.Router();
 
@@ -7,6 +7,8 @@ const doctorRouter = express.Router();
 doctorRouter.post("/login", login);
 
 doctorRouter.post("/signup", signup);
+
+doctorRouter.post("/getinfo/:id", getUser);
 
 doctorRouter.patch("/acceptbooking/:id", acceptBooking);
 
